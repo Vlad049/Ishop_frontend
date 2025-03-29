@@ -28,7 +28,7 @@ def add_product(name: str, description: str, price: float, img_url: str, url: st
     )
 
     msg = requests.post(url, json=body)
-    flash(msg)
+    flash(msg, category="success")
 
 
 def update_product(product_id: str, name: str, description: str, price: float, img_url: str, url: str = PROD_URL):
@@ -39,4 +39,11 @@ def update_product(product_id: str, name: str, description: str, price: float, i
         img_url=img_url
     )
     msg = requests.put(url + product_id, json=body)
-    flash(msg)
+    flash(msg, category="success")
+
+
+def add_review(product_id: str, text: str, url: str = PROD_URL) -> str:
+    body = dict(text=text)
+    msg = requests.patch(url + product_id, json=body).json()
+    flash(msg, category="success")
+    
