@@ -9,6 +9,7 @@ import requests
 load_dotenv()
 
 PROD_URL = os.getenv("PRODUCT_URL")
+USER_URL = os.getenv("USER_URL")
 
 
 def get_products(url: str = PROD_URL) -> list:
@@ -42,8 +43,14 @@ def update_product(product_id: str, name: str, description: str, price: float, i
     flash(msg, category="success")
 
 
-def add_review(product_id: str, text: str, url: str = PROD_URL) -> str:
-    body = dict(text=text)
+def add_review(product_id: str, text: str, name: str, url: str = PROD_URL) -> str:
+    body = dict(text=text, name=name)
     msg = requests.patch(url + product_id, json=body).json()
+    flash(msg, category="success")
+
+
+def buy_product(product_id: str, name: str, url: str = USER_URL):
+    body = dict(name=name)
+    msg = requests.post(url + product_id, json=body).json()
     flash(msg, category="success")
     

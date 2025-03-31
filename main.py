@@ -1,4 +1,4 @@
-from flask import Flask, flash, render_template, redirect, url_for
+from flask import Flask, flash, render_template, redirect, url_for, request
 
 from src.data import data_actions
 from src.data.forms import ReviewForm
@@ -20,16 +20,18 @@ def get_product(product_id):
 
     if form.validate_on_submit():
         text = form.text.data
-        data_actions.add_review(product_id, text)
+        name = form.name.data
+        data_actions.add_review(product_id, text, name)
+        return redirect(url_for("get_product", product_id=product_id))
     
     product = data_actions.get_product(product_id)
     return render_template("product.html", product=product, form=form)
 
 
-@app.get("/buy_products/<product_id>/")
+@app.post("/buy_products/<product_id>/")
 def buy_product(product_id):
-    product = data_actions.get_product(product_id)
-    flash(f"Вітаємо з покупкою '{product['name']}'", category="success")
+    name =  request.form.get("name")
+    data_actions.buy_product(product_id, name)
     return redirect(url_for("index"))
 
 
