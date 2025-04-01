@@ -26,6 +26,7 @@
       <tr>
         <th>#</th>
         <th>Відгук</th>
+        <th>Користувач</th>
       </tr>
     </thead>
     <tbody>
@@ -33,6 +34,7 @@
       <tr>
         <td>{{ loop.index }}</td>
         <td>{{ review.text}}</td>
+        <td>{{ review.user.name}}</td>
       </tr>
       {% endfor %}
     </tbody>
