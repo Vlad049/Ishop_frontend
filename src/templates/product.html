@@ -7,14 +7,14 @@
     <img src="{{ product.img_url }}" class="w-75" alt="">
     <p class="my-4 w-75">{{ product.description }}</p>
   
-    <form action="{{ url_for('buy_product', product_id=product_id) }}" method="post">
+    <form action="{{ url_for('buy_product', product_id=product.id) }}" method="post">
 
       <div class="form-group">
           <label class="form-label">Ваше ім'я</label>
           <input type="text" name="name" class="form-control">
       </div>
       <div class="form-group">
-          <button type="submit" class="btn btn-success btn-lg">Купити за {{ product.price }} грн</button>
+          <button type="submit" class="btn btn-primary btn-lg">Купити за {{ product.price }} грн</button>
       </div>
     </form>
   
@@ -40,7 +40,7 @@
     </tbody>
   </table>
 
-  <form action="{{ url_for('get_product', product_id=product_id) }}" method="post">
+  <form action="{{ url_for('get_product', product_id=product.id) }}" method="post">
     {{ form.hidden_tag() }}
 
     <div class="form-group">
@@ -48,7 +48,11 @@
       {{ form.text(class="form-control") }}
     </div>
     <div class="form-group">
-      {{ form.submit(class="btn btn-success") }}
+      {{ form.name.label(class="form-label") }}
+      {{ form.name(class="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ form.submit(class="btn btn-primary") }}
     </div>
   </form>
 {% endblock content %}
